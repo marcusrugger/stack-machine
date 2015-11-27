@@ -21,10 +21,22 @@ public class StackMachine
     }
 
     public static void test2()
-    {}
+    {
+        Stack stack = new StackLIFO();
+
+        stack.push(12);
+        stack.push(23);
+
+        StackOperator op = new StackOperatorPair(FnBasicMath::multiply);
+
+        op.operate(stack);
+
+        System.out.println(stack.pull());
+    }
 
     public static void main(String[] args)
     {
         test1();
+        test2();
     }
 }

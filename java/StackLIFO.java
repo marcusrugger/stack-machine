@@ -1,4 +1,4 @@
-
+import java.lang.RuntimeException;
 
 public class StackLIFO implements Stack
 {
@@ -32,14 +32,16 @@ public class StackLIFO implements Stack
     {
         if (index < size)
             stack[index++] = x;
+        else
+            throw new RuntimeException("Stack overflow");
     }
 
     public double pull()
     {
-        double rv = 0;
         if (index > 0)
-            rv = stack[--index];
-        return rv;
+            return stack[--index];
+        else
+            throw new RuntimeException("Stack underflow");
     }
 
     public boolean hasMore()
