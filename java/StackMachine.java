@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 public class StackMachine
 {
@@ -34,9 +35,31 @@ public class StackMachine
         System.out.println(stack.pull());
     }
 
+    public static void test3()
+    {
+        Stack stack = new StackLIFO();
+        ArrayList<StackOperator> ops = new ArrayList<StackOperator>();
+
+        ops.add(new StackOperatorNone   (new FnNumber(186282.3976)));
+        ops.add(new StackOperatorSingle (FnBasicMath::square));
+        ops.add(new StackOperatorSingle (Math::sqrt));
+        ops.add(new StackOperatorNone   (new FnNumber(3600)));
+        ops.add(new StackOperatorNone   (new FnNumber(24)));
+        ops.add(new StackOperatorNone   (new FnNumber(365.25)));
+        ops.add(new StackOperatorPair   (FnBasicMath::multiply));
+        ops.add(new StackOperatorPair   (FnBasicMath::multiply));
+        ops.add(new StackOperatorPair   (FnBasicMath::multiply));
+
+        for (StackOperator op : ops)
+            op.operate(stack);
+
+        System.out.println(stack.pull());
+    }
+
     public static void main(String[] args)
     {
         test1();
         test2();
+        test3();
     }
 }
