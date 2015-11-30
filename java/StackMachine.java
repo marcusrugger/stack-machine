@@ -56,10 +56,30 @@ public class StackMachine
         System.out.println(stack.pull());
     }
 
+    public static void test4()
+    {
+        Stack stack = new StackLIFO();
+        ArrayList<StackOperator> ops = new ArrayList<StackOperator>();
+
+        ops.add(StackOperator.create(new FnNumber(186282.3976)));
+        ops.add(StackOperator.create(new FnNumber(3600)));
+        ops.add(StackOperator.create(new FnNumber(24)));
+        ops.add(StackOperator.create(new FnNumber(365.25)));
+        ops.add(StackOperator.create(FnBasicMath::multiply));
+        ops.add(StackOperator.create(FnBasicMath::multiply));
+        ops.add(StackOperator.create(FnBasicMath::multiply));
+
+        for (StackOperator op : ops)
+            op.operate(stack);
+
+        System.out.println(stack.pull());
+    }
+
     public static void main(String[] args)
     {
         test1();
         test2();
         test3();
+        test4();
     }
 }
