@@ -24,7 +24,7 @@ public class StackLIFO implements Stack
         this.index  = other.index;
         this.stack  = new double[this.size];
 
-        for (int i = 0; i < this.size; i++)
+        for (int i = 0; i < this.index; i++)
             this.stack[i] = other.stack[i];
     }
 
