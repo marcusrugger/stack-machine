@@ -26,7 +26,7 @@ void test1(void)
 
     std::unique_ptr<Stack> stack_two(stack_one->clone());
 
-    while (stack_two->isMore())
+    while (stack_two->hasMore())
         std::cout << stack_two->pull() << std::endl;
 }
 

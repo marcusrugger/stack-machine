@@ -23,7 +23,7 @@ public:
     virtual void push(double d) = 0;
     virtual double pull(void)   = 0;
 
-    virtual bool isMore(void)   const = 0;
+    virtual bool hasMore(void)   const = 0;
 
     virtual Stack *clone(void)  const = 0;
 
@@ -60,7 +60,7 @@ public:
     void push(double d);
     double pull(void);
 
-    bool isMore(void) const { return _count > 0; }
+    bool hasMore(void) const { return _count > 0; }
 
     Stack *clone(void) const { return new StackFIFO(*this); }
 
@@ -91,7 +91,7 @@ public:
     void push(double d);
     double pull(void);
 
-    bool isMore(void) const { return _index > 0; }
+    bool hasMore(void) const { return _index > 0; }
 
     Stack *clone(void) const { return new StackLIFO(*this); }
 
