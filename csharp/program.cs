@@ -8,25 +8,26 @@ namespace StackMachine
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-
             var stack = new Stack<Number>();
-            var oplist = new List<Operator>();
 
-            oplist.Add(Operators.Push(new Number(186282.3976)));
-            oplist.Add(Operators.Push(new Number(3600)));
-            oplist.Add(Operators.Push(new Number(24)));
-            oplist.Add(Operators.Push(new Number(365.25)));
-            oplist.Add(Operators.Push(new Number(4.27)));
-            oplist.Add(Operators.Multiply());
-            oplist.Add(Operators.Multiply());
-            oplist.Add(Operators.Multiply());
-            oplist.Add(Operators.Multiply());
+            Test1(stack);
+            Console.WriteLine($"Result: {stack.Pop()}");
+        }
 
-            oplist.ForEach(f => f(stack));
+        static void Test1(Stack<Number> stack)
+        {
+            Operators.Push(186282.3976)(stack);
+            Operators.Push(3600)(stack);
+            Operators.Multiply(stack);
 
-            var result = stack.Pop();
+            Operators.Push(24)(stack);
+            Operators.Multiply(stack);
 
-            Console.WriteLine($"Result: {result}");
+            Operators.Push(365.25)(stack);
+            Operators.Multiply(stack);
+
+            Operators.Push(4.27)(stack);
+            Operators.Multiply(stack);
         }
     }
 }
