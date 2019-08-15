@@ -12,7 +12,8 @@ namespace StackMachine
         private static Operator op(Monadic fn) => (Stack<Number> stack) => stack.Push( fn( stack.Pop() ) );
         private static Operator op(Dyadic fn) => (Stack<Number> stack) => stack.Push( fn( stack.Pop(), stack.Pop() ) );
 
-        public static Operator Push(double number) => Push(new Number(number));
+        public static Operator Push(int number) => Push(new NumberInteger(number));
+        public static Operator Push(double number) => Push(new NumberDouble(number));
         public static Operator Push(Number number) => (stack) => stack.Push(number);
 
         public static Operator Add => op((x, y) => x.Add(y));
@@ -22,9 +23,12 @@ namespace StackMachine
         public static Operator Power => op((x, y) => x.Power(y));
         public static Operator Root => op((x, y) => x.Root(y));
 
+        public static Operator AbsoluteValue => op((x) => x.AbsoluteValue);
+
         public static Operator Square => op((x) => x.Squared);
         public static Operator Cube => op((x) => x.Cubed);
         public static Operator SquareRoot => op((x) => x.SquareRoot);
+        public static Operator CubeRoot => op((x) => x.CubeRoot);
 
         public static Operator Sine => op((x) => x.Sine);
         public static Operator Cosine => op((x) => x.Cosine);
