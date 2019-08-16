@@ -4,46 +4,38 @@ namespace StackMachine
 {
     abstract class Number
     {
-        public abstract int ToInteger();
+        public abstract Int64 ToInteger();
         public abstract double ToDouble();
 
-        public virtual Number Add(Number y) => throw new NotImplementedException();
-        public virtual Number Subtract(Number y) => throw new NotImplementedException();
-        public virtual Number Multiply(Number y) => throw new NotImplementedException();
-        public virtual Number Divide(Number y) => throw new NotImplementedException();
-        public virtual Number Power(Number y) => throw new NotImplementedException();
-        public virtual Number Root(Number y) => throw new NotImplementedException();
+        public virtual bool Equals(Number y) => throw new NotImplementedException();
+        public virtual bool NotEquals(Number y) => throw new NotImplementedException();
+        public virtual bool LessThan(Number y) => throw new NotImplementedException();
+        public virtual bool GreaterThan(Number y) => throw new NotImplementedException();
+        public virtual bool LessThanOrEqualTo(Number y) => throw new NotImplementedException();
+        public virtual bool GreaterThanOrEqualTo(Number y) => throw new NotImplementedException();
+
+        public virtual Number Plus(Number y) => throw new NotImplementedException();
+        public virtual Number Minus(Number y) => throw new NotImplementedException();
+        public virtual Number Times(Number y) => throw new NotImplementedException();
+        public virtual Number DividedBy(Number y) => throw new NotImplementedException();
+        public virtual Number Remainder(Number y) => throw new NotImplementedException();
 
         public virtual Number AbsoluteValue => throw new NotImplementedException();
-
-        public virtual Number Squared => throw new NotImplementedException();
-        public virtual Number Cubed => throw new NotImplementedException();
-        public virtual Number SquareRoot => throw new NotImplementedException();
-        public virtual Number CubeRoot => throw new NotImplementedException();
-
-        public virtual Number Sine => throw new NotImplementedException();
-        public virtual Number Cosine => throw new NotImplementedException();
-        public virtual Number Tangent => throw new NotImplementedException();
-
-        public virtual Number ArcSine => throw new NotImplementedException();
-        public virtual Number ArcCosine => throw new NotImplementedException();
-        public virtual Number ArcTangent => throw new NotImplementedException();
-
-        public virtual Number Ln => throw new NotImplementedException();
-        public virtual Number Log => throw new NotImplementedException();
-        public virtual Number LogN(Number y) => throw new NotImplementedException();
-        public virtual Number Exp => throw new NotImplementedException();
-        public virtual Number Exp10 => throw new NotImplementedException();
+        public virtual Number Floor => throw new NotImplementedException();
+        public virtual Number Ceiling => throw new NotImplementedException();
+        public virtual Number Truncate => throw new NotImplementedException();
+        public virtual Number Round => throw new NotImplementedException();
+        public virtual Number FractionalPart => throw new NotImplementedException();
     }
 
     class NumberInteger : Number
     {
-        int Value { get; }
+        Int64 Value { get; }
 
-        public NumberInteger(int number) => Value = number;
+        public NumberInteger(Int64 number) => Value = number;
         public NumberInteger(Number number) => Value = number.ToInteger();
 
-        public override int ToInteger() => Value;
+        public override Int64 ToInteger() => Value;
         public override double ToDouble() => (double)Value;
 
         public override string ToString()
@@ -51,43 +43,35 @@ namespace StackMachine
             return Value.ToString();
         }
 
-        public override Number Add(Number y) => new NumberInteger(Value + y.ToInteger());
-        public override Number Subtract(Number y) => new NumberInteger(Value - y.ToInteger());
-        public override Number Multiply(Number y) => new NumberInteger(Value * y.ToInteger());
-        public override Number Divide(Number y) => new NumberInteger(Value / y.ToInteger());
-        public override Number Power(Number y) => new NumberInteger((int)Math.Pow(Value, y.ToDouble()));
-        public override Number Root(Number y) => new NumberDouble(Math.Pow(Value, 1/y.ToDouble()));
+        public override bool Equals(Number y) => (Value == y.ToInteger());
+        public override bool NotEquals(Number y) => (Value != y.ToInteger());
+        public override bool LessThan(Number y) => (Value < y.ToInteger());
+        public override bool GreaterThan(Number y) => (Value > y.ToInteger());
+        public override bool LessThanOrEqualTo(Number y) => (Value <= y.ToInteger());
+        public override bool GreaterThanOrEqualTo(Number y) => (Value >= y.ToInteger());
+
+        public override Number Plus(Number y) => new NumberInteger(Value + y.ToInteger());
+        public override Number Minus(Number y) => new NumberInteger(Value - y.ToInteger());
+        public override Number Times(Number y) => new NumberInteger(Value * y.ToInteger());
+        public override Number DividedBy(Number y) => new NumberInteger(Value / y.ToInteger());
+        public override Number Remainder(Number y) => new NumberInteger(Value % y.ToInteger());
 
         public override Number AbsoluteValue => new NumberInteger(Math.Abs(Value));
-
-        public override Number Squared => new NumberInteger(Value * Value);
-        public override Number Cubed => new NumberInteger(Value * Value * Value);
-        public override Number SquareRoot => new NumberDouble(Math.Sqrt(Value));
-        public override Number CubeRoot => new NumberDouble(Math.Pow(Value, 1/3));
-
-        public override Number Sine => new NumberDouble(Math.Sin(Value));
-        public override Number Cosine => new NumberDouble(Math.Cos(Value));
-        public override Number Tangent => new NumberDouble(Math.Tan(Value));
-
-        public override Number ArcSine => new NumberDouble(Math.Asin(Value));
-        public override Number ArcCosine => new NumberDouble(Math.Acos(Value));
-        public override Number ArcTangent => new NumberDouble(Math.Atan(Value));
-
-        public override Number Ln => new NumberDouble(Math.Log(Value));
-        public override Number Log => new NumberDouble(Math.Log10(Value));
-        public override Number LogN(Number y) => new NumberDouble(Math.Log(Value, y.ToDouble()));
-        public override Number Exp => new NumberDouble(Math.Exp(Value));
-        public override Number Exp10 => new NumberInteger((int)Math.Pow(Value, 10));
+        public override Number Floor => this;
+        public override Number Ceiling => this;
+        public override Number Truncate => this;
+        public override Number Round => this;
+        public override Number FractionalPart => new NumberInteger(0);
     }
 
-    class NumberDouble : Number
+    class NumberFloatingPoint : Number
     {
         double Value { get; }
 
-        public NumberDouble(double number) => Value = number;
-        public NumberDouble(Number number) => Value = number.ToDouble();
+        public NumberFloatingPoint(double number) => Value = number;
+        public NumberFloatingPoint(Number number) => Value = number.ToDouble();
 
-        public override int ToInteger() => (int)Value;
+        public override Int64 ToInteger() => (Int64)Value;
         public override double ToDouble() => Value;
 
         public override string ToString()
@@ -95,32 +79,24 @@ namespace StackMachine
             return Value.ToString();
         }
 
-        public override Number Add(Number y) => new NumberDouble(Value + y.ToDouble());
-        public override Number Subtract(Number y) => new NumberDouble(Value - y.ToDouble());
-        public override Number Multiply(Number y) => new NumberDouble(Value * y.ToDouble());
-        public override Number Divide(Number y) => new NumberDouble(Value / y.ToDouble());
-        public override Number Power(Number y) => new NumberDouble(Math.Pow(Value, y.ToDouble()));
-        public override Number Root(Number y) => new NumberDouble(Math.Pow(Value, 1/y.ToDouble()));
+        public override bool Equals(Number y) => (Value == y.ToDouble());
+        public override bool NotEquals(Number y) => (Value != y.ToDouble());
+        public override bool LessThan(Number y) => (Value < y.ToDouble());
+        public override bool GreaterThan(Number y) => (Value > y.ToDouble());
+        public override bool LessThanOrEqualTo(Number y) => (Value <= y.ToDouble());
+        public override bool GreaterThanOrEqualTo(Number y) => (Value >= y.ToDouble());
 
-        public override Number AbsoluteValue => new NumberDouble(Math.Abs(Value));
+        public override Number Plus(Number y) => new NumberFloatingPoint(Value + y.ToDouble());
+        public override Number Minus(Number y) => new NumberFloatingPoint(Value - y.ToDouble());
+        public override Number Times(Number y) => new NumberFloatingPoint(Value * y.ToDouble());
+        public override Number DividedBy(Number y) => new NumberFloatingPoint(Value / y.ToDouble());
+        public override Number Remainder(Number y) => new NumberFloatingPoint(Value % y.ToDouble());
 
-        public override Number Squared => new NumberDouble(Value * Value);
-        public override Number Cubed => new NumberDouble(Value * Value * Value);
-        public override Number SquareRoot => new NumberDouble(Math.Sqrt(Value));
-        public override Number CubeRoot => new NumberDouble(Math.Pow(Value, 1/3));
-
-        public override Number Sine => new NumberDouble(Math.Sin(Value));
-        public override Number Cosine => new NumberDouble(Math.Cos(Value));
-        public override Number Tangent => new NumberDouble(Math.Tan(Value));
-
-        public override Number ArcSine => new NumberDouble(Math.Asin(Value));
-        public override Number ArcCosine => new NumberDouble(Math.Acos(Value));
-        public override Number ArcTangent => new NumberDouble(Math.Atan(Value));
-
-        public override Number Ln => new NumberDouble(Math.Log(Value));
-        public override Number Log => new NumberDouble(Math.Log10(Value));
-        public override Number LogN(Number y) => new NumberDouble(Math.Log(Value, y.ToDouble()));
-        public override Number Exp => new NumberDouble(Math.Exp(Value));
-        public override Number Exp10 => new NumberDouble(Math.Pow(Value, 10));
+        public override Number AbsoluteValue => new NumberFloatingPoint(Math.Abs(Value));
+        public override Number Floor => new NumberFloatingPoint(Math.Floor(Value));
+        public override Number Ceiling => new NumberFloatingPoint(Math.Ceiling(Value));
+        public override Number Truncate => new NumberFloatingPoint(Math.Truncate(Value));
+        public override Number Round => new NumberFloatingPoint(Math.Round(Value));
+        public override Number FractionalPart => new NumberFloatingPoint(Value - Math.Truncate(Value));
     }
 }

@@ -9,51 +9,70 @@ namespace StackMachine
         {
             Console.WriteLine("Hello World!");
             var stack = new Stack<Number>();
+            var testlist = new List<List<Operator>>
+            {
+                Test1,
+                Test2,
+                Test3,
+                Test4,
+                Test5
+            };
 
-            Test1(stack);
-            Console.WriteLine($"Result: {stack.Pop()}");
-
-            Test2(stack);
-            Console.WriteLine($"Result: {stack.Pop()}");
-
-            Test3(stack);
-            Console.WriteLine($"Result: {stack.Pop()}");
+            foreach (var test in testlist)
+            {
+                foreach (var op in test) op(stack);
+                Console.WriteLine($"Result: {stack.Pop()}");
+            }
         }
 
-        static void Test1(Stack<Number> stack)
+        static List<Operator> Test1 => new List<Operator>
         {
-            Operators.Push(186282.3976)(stack);
-            Operators.Push(3600)(stack);
-            Operators.Multiply(stack);
+            Operators.Push(186282.3976),
+            Operators.Push(3600),
+            Operators.Multiply,
 
-            Operators.Push(24)(stack);
-            Operators.Multiply(stack);
+            Operators.Push(24),
+            Operators.Multiply,
 
-            Operators.Push(365.25)(stack);
-            Operators.Multiply(stack);
+            Operators.Push(365.25),
+            Operators.Multiply,
 
-            Operators.Push(4.27)(stack);
-            Operators.Multiply(stack);
-        }
+            Operators.Push(4.27),
+            Operators.Multiply
+        };
 
-        static void Test2(Stack<Number> stack)
+        static List<Operator> Test2 => new List<Operator>
         {
-            Operators.Push(2)(stack);
-            Operators.Push(8)(stack);
-            Operators.Multiply(stack);
-            Operators.SquareRoot(stack);
-        }
+            Operators.Push(2),
+            Operators.Push(8),
+            Operators.Multiply,
+            Operators.SquareRoot
+        };
 
-        static void Test3(Stack<Number> stack)
+        static List<Operator> Test3 => new List<Operator>
         {
-            Operators.Push(3)(stack);
-            Operators.Square(stack);
+            Operators.Push(3),
+            Operators.Square,
 
-            Operators.Push(4)(stack);
-            Operators.Square(stack);
+            Operators.Push(4),
+            Operators.Square,
 
-            Operators.Add(stack);
-            Operators.SquareRoot(stack);
-        }
+            Operators.Add,
+            Operators.SquareRoot
+        };
+
+        static List<Operator> Test4 => new List<Operator>
+        {
+            Operators.Push(1.0),
+            Operators.Push(2.0),
+            Operators.Divide
+        };
+
+        static List<Operator> Test5 => new List<Operator>
+        {
+            Operators.Push(3.5),
+            Operators.Push(2.1),
+            Operators.Remainder
+        };
     }
 }
