@@ -9,16 +9,8 @@ namespace StackMachine
         {
             Console.WriteLine("Hello World!");
             var stack = new Stack<Number>();
-            var testlist = new List<List<Operator>>
-            {
-                TestDistanceToProximaCentauri,
-                TestSquareRoot,
-                TestSquaresAndSquareRoot,
-                TestDivide,
-                TestRemainder
-            };
 
-            foreach (var test in testlist)
+            foreach (var test in TestList)
             {
                 foreach (var op in test) op(stack);
                 var shouldbe = stack.Pop();
@@ -30,6 +22,15 @@ namespace StackMachine
                     Console.WriteLine($"Test FAILED: should be {shouldbe}, actual {actual}");
             }
         }
+
+        static List<List<Operator>> TestList = new List<List<Operator>>
+        {
+            TestDistanceToProximaCentauri,
+            TestSquareRoot,
+            TestSquaresAndSquareRoot,
+            TestDivide,
+            TestRemainder
+        };
 
         static List<Operator> TestDistanceToProximaCentauri => new List<Operator>
         {
