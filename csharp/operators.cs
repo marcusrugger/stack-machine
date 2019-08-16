@@ -16,6 +16,8 @@ namespace StackMachine
         public static Operator Push(double number) => Push(new NumberFloatingPoint(number));
         public static Operator Push(Number number) => (stack) => stack.Push(number);
 
+        public static Operator FractionalPart => op((x) => x.FractionalPart);
+
         public static Operator Add => op((x, y) => y.Plus(x));
         public static Operator Subtract => op((x, y) => y.Minus(x));
         public static Operator Multiply => op((x, y) => y.Times(x));
