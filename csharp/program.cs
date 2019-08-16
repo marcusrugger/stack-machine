@@ -11,11 +11,11 @@ namespace StackMachine
             var stack = new Stack<Number>();
             var testlist = new List<List<Operator>>
             {
-                Test1,
-                Test2,
-                Test3,
-                Test4,
-                Test5
+                TestDistanceToProximaCentauri,
+                TestSquareRoot,
+                TestSquaresAndSquareRoot,
+                TestDivide,
+                TestRemainder
             };
 
             foreach (var test in testlist)
@@ -25,7 +25,7 @@ namespace StackMachine
             }
         }
 
-        static List<Operator> Test1 => new List<Operator>
+        static List<Operator> TestDistanceToProximaCentauri => new List<Operator>
         {
             Operators.Push(186282.3976),
             Operators.Push(3600),
@@ -41,7 +41,7 @@ namespace StackMachine
             Operators.Multiply
         };
 
-        static List<Operator> Test2 => new List<Operator>
+        static List<Operator> TestSquareRoot => new List<Operator>
         {
             Operators.Push(2),
             Operators.Push(8),
@@ -49,7 +49,7 @@ namespace StackMachine
             Operators.SquareRoot
         };
 
-        static List<Operator> Test3 => new List<Operator>
+        static List<Operator> TestSquaresAndSquareRoot => new List<Operator>
         {
             Operators.Push(3),
             Operators.Square,
@@ -61,14 +61,14 @@ namespace StackMachine
             Operators.SquareRoot
         };
 
-        static List<Operator> Test4 => new List<Operator>
+        static List<Operator> TestDivide => new List<Operator>
         {
             Operators.Push(1.0),
             Operators.Push(2.0),
             Operators.Divide
         };
 
-        static List<Operator> Test5 => new List<Operator>
+        static List<Operator> TestRemainder => new List<Operator>
         {
             Operators.Push(3.5),
             Operators.Push(2.1),
