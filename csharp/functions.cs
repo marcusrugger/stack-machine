@@ -29,15 +29,15 @@ namespace StackMachine
 
             if (x.Equals(NumberInteger.Zero)) return new NumberInteger(1);
 
-            Number result = new NumberFloatingPoint(2.0);
-            Number count = new NumberInteger(3);
-            while (count.LessThanOrEqualTo(x))
-            {
-                result = result.Times(count);
-                count = count.Increment;
-            }
+            return Recursion(new NumberFloatingPoint(2.0));
 
-            return result;
+            Number Recursion(Number c)
+            {
+                if (c.LessThan(x))
+                    return c.Times(Recursion(c.Increment));
+                else
+                    return c;
+            }
         }
     }
 
