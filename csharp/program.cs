@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace StackMachine
 {
@@ -13,17 +14,20 @@ namespace StackMachine
 
             TestList.ForEach(test =>
             {
-                RunTest(machine, test);
-                ValidateTest(machine);
+                var time = RunTest(machine, test);
+                ValidateTest(machine, time);
             });
         }
 
-        static void RunTest(Machine machine, List<Operator> test)
+        static long RunTest(Machine machine, List<Operator> test)
         {
+            var sw = new Stopwatch();
+            sw.Start();
             test.ForEach(op => op(machine));
+            return sw.ElapsedMilliseconds;
         }
 
-        static void ValidateTest(Machine machine)
+        static void ValidateTest(Machine machine, long time)
         {
             bool AreEqual(Number a, Number b, Number p) => a.Minus(b).AbsoluteValue.LessThanOrEqualTo(p);
 
@@ -33,9 +37,9 @@ namespace StackMachine
             var passed = AreEqual(expected, actual, precision);
 
             if (passed)
-                Console.WriteLine($"Test PASSED: result = {actual}");
+                Console.WriteLine($"Test PASSED: result = {actual}, time = {time}");
             else
-                Console.WriteLine($"Test FAILED: expected = {expected}, actual = {actual}");
+                Console.WriteLine($"Test FAILED: expected = {expected}, actual = {actual}, time = {time}");
         }
 
         static List<List<Operator>> TestList = new List<List<Operator>>
@@ -144,11 +148,11 @@ namespace StackMachine
 
         static List<Operator> TestFactorial => new List<Operator>
         {
-            Operators.Push(69.0),
+            Operators.Push(170.0),
             Operators.Factorial,
 
-            Operators.Push(3628800.0),
-            Operators.Push(0)
+            Operators.Push(7.25741561531e306),
+            Operators.Push(1.0e296)
         };
     }
 }
