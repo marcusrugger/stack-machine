@@ -46,5 +46,7 @@ namespace StackMachine
         public static Operator ArcSine => op(Functions.Asin);
         public static Operator ArcCosine => op(Functions.Acos);
         public static Operator ArcTangent => op(Functions.Atan);
+
+        public static Operator Factorial => op(Functions.Factorial);
     }
 }

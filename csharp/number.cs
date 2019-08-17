@@ -14,6 +14,8 @@ namespace StackMachine
         public virtual bool LessThanOrEqualTo(Number y) => throw new NotImplementedException();
         public virtual bool GreaterThanOrEqualTo(Number y) => throw new NotImplementedException();
 
+        public virtual Number Increment => throw new NotImplementedException();
+
         public virtual Number Plus(Number y) => throw new NotImplementedException();
         public virtual Number Minus(Number y) => throw new NotImplementedException();
         public virtual Number Times(Number y) => throw new NotImplementedException();
@@ -31,6 +33,8 @@ namespace StackMachine
     class NumberInteger : Number
     {
         Int64 Value { get; }
+
+        public static NumberInteger Zero { get; } = new NumberInteger(0);
 
         public NumberInteger(Int64 number) => Value = number;
         public NumberInteger(Number number) => Value = number.ToInteger();
@@ -50,6 +54,8 @@ namespace StackMachine
         public override bool LessThanOrEqualTo(Number y) => (Value <= y.ToInteger());
         public override bool GreaterThanOrEqualTo(Number y) => (Value >= y.ToInteger());
 
+        public override Number Increment => new NumberInteger(Value + 1);
+
         public override Number Plus(Number y) => new NumberInteger(Value + y.ToInteger());
         public override Number Minus(Number y) => new NumberInteger(Value - y.ToInteger());
         public override Number Times(Number y) => new NumberInteger(Value * y.ToInteger());
@@ -68,6 +74,8 @@ namespace StackMachine
     {
         double Value { get; }
 
+        public static NumberFloatingPoint Zero { get; } = new NumberFloatingPoint(0.0);
+
         public NumberFloatingPoint(double number) => Value = number;
         public NumberFloatingPoint(Number number) => Value = number.ToDouble();
 
@@ -85,6 +93,8 @@ namespace StackMachine
         public override bool GreaterThan(Number y) => (Value > y.ToDouble());
         public override bool LessThanOrEqualTo(Number y) => (Value <= y.ToDouble());
         public override bool GreaterThanOrEqualTo(Number y) => (Value >= y.ToDouble());
+
+        public override Number Increment => new NumberFloatingPoint(Value + 1.0);
 
         public override Number Plus(Number y) => new NumberFloatingPoint(Value + y.ToDouble());
         public override Number Minus(Number y) => new NumberFloatingPoint(Value - y.ToDouble());

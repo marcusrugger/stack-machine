@@ -21,6 +21,24 @@ namespace StackMachine
         public static Number Asin(Number x) => MathFunctions.Asin(x);
         public static Number Acos(Number x) => MathFunctions.Acos(x);
         public static Number Atan(Number x) => MathFunctions.Atan(x);
+
+        public static Number Factorial(Number x)
+        {
+            if (x.FractionalPart.NotEquals(NumberInteger.Zero) ||
+                x.LessThan(NumberInteger.Zero)) throw new ArgumentException("Factorial argument must be an integer >= 0");
+
+            if (x.Equals(NumberInteger.Zero)) return new NumberInteger(1);
+
+            Number result = new NumberFloatingPoint(2.0);
+            Number count = new NumberInteger(3);
+            while (count.LessThanOrEqualTo(x))
+            {
+                result = result.Times(count);
+                count = count.Increment;
+            }
+
+            return result;
+        }
     }
 
     class MathFunctions

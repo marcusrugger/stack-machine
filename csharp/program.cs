@@ -46,7 +46,8 @@ namespace StackMachine
             TestDivide,
             TestRemainder,
             TestFractionalPart,
-            TestMachineMemory
+            TestMachineMemory,
+            TestFactorial
         };
 
         static List<Operator> TestDistanceToProximaCentauri => new List<Operator>
@@ -138,6 +139,15 @@ namespace StackMachine
             Operators.Multiply,
 
             Operators.Push(144),
+            Operators.Push(0)
+        };
+
+        static List<Operator> TestFactorial => new List<Operator>
+        {
+            Operators.Push(69.0),
+            Operators.Factorial,
+
+            Operators.Push(3628800.0),
             Operators.Push(0)
         };
     }
