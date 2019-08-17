@@ -29,7 +29,7 @@ namespace StackMachine
 
             if (x.Equals(NumberInteger.Zero)) return new NumberInteger(1);
 
-            return Recursion(new NumberFloatingPoint(2.0));
+            return Recursion(new NumberFloatingPoint(1.0));
 
             Number Recursion(Number c)
             {
