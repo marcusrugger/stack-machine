@@ -7,24 +7,36 @@ namespace StackMachine
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             var stack = new Stack<Number>();
 
-            foreach (var test in TestList)
+            Console.WriteLine("Hello World!");
+
+            TestList.ForEach(test =>
             {
-                foreach (var op in test) op(stack);
-                var precision = stack.Pop();
-                var shouldbe = stack.Pop();
-                var actual = stack.Pop();
-                var passed = AreEqual(shouldbe, actual, precision);
-                if (passed)
-                    Console.WriteLine($"Test PASSED: result {actual}");
-                else
-                    Console.WriteLine($"Test FAILED: should be {shouldbe}, actual {actual}");
-            }
+                RunTest(stack, test);
+                ValidateTest(stack);
+            });
         }
 
-        static bool AreEqual(Number a, Number b, Number p) => a.Minus(b).AbsoluteValue.LessThanOrEqualTo(p);
+        static void RunTest(Stack<Number> stack, List<Operator> test)
+        {
+            test.ForEach(op => op(stack));
+        }
+
+        static void ValidateTest(Stack<Number> stack)
+        {
+            bool AreEqual(Number a, Number b, Number p) => a.Minus(b).AbsoluteValue.LessThanOrEqualTo(p);
+
+            var precision = stack.Pop();
+            var expected = stack.Pop();
+            var actual = stack.Pop();
+            var passed = AreEqual(expected, actual, precision);
+
+            if (passed)
+                Console.WriteLine($"Test PASSED: result = {actual}");
+            else
+                Console.WriteLine($"Test FAILED: expected = {expected}, actual = {actual}");
+        }
 
         static List<List<Operator>> TestList = new List<List<Operator>>
         {
@@ -51,7 +63,7 @@ namespace StackMachine
             Operators.Push(4.27),
             Operators.Multiply,
 
-            Operators.Push(25101730417442.5),//(186282.3976*3600*24*365.25*4.27)
+            Operators.Push(25101730417442.5),
             Operators.Push(0.1)
         };
 
@@ -78,7 +90,7 @@ namespace StackMachine
             Operators.SquareRoot,
 
             Operators.Push(5.0),
-            Operators.Push(0)
+            Operators.Push(0.0)
         };
 
         static List<Operator> TestDivide => new List<Operator>
@@ -88,7 +100,7 @@ namespace StackMachine
             Operators.Divide,
 
             Operators.Push(0.5),
-            Operators.Push(0.000000001)
+            Operators.Push(0.0)
         };
 
         static List<Operator> TestRemainder => new List<Operator>
@@ -98,7 +110,7 @@ namespace StackMachine
             Operators.Remainder,
 
             Operators.Push(1.4),
-            Operators.Push(0.000000001)
+            Operators.Push(0.0)
         };
 
         static List<Operator> TestFractionalPart => new List<Operator>
@@ -107,7 +119,7 @@ namespace StackMachine
             Operators.FractionalPart,
 
             Operators.Push(-0.1),
-            Operators.Push(0.000000001)
+            Operators.Push(0.000000000001)
         };
     }
 }
