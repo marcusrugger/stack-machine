@@ -5,16 +5,19 @@ namespace StackMachine
 {
     delegate Number Monadic(Number x);
     delegate Number Dyadic(Number x, Number y);
-    delegate void Operator(Stack<Number> stack);
+    delegate void Operator(Machine machine);
 
     static class Operators
     {
-        private static Operator op(Monadic fn) => (Stack<Number> stack) => stack.Push( fn( stack.Pop() ) );
-        private static Operator op(Dyadic fn) => (Stack<Number> stack) => stack.Push( fn( stack.Pop(), stack.Pop() ) );
+        private static Operator op(Monadic fn) => (Machine machine) => machine.Stack.Push( fn( machine.Stack.Pop() ) );
+        private static Operator op(Dyadic fn) => (Machine machine) => machine.Stack.Push( fn( machine.Stack.Pop(), machine.Stack.Pop() ) );
 
         public static Operator Push(Int64 number) => Push(new NumberInteger(number));
         public static Operator Push(double number) => Push(new NumberFloatingPoint(number));
-        public static Operator Push(Number number) => (stack) => stack.Push(number);
+        public static Operator Push(Number number) => (machine) => machine.Stack.Push(number);
+
+        public static Operator PopToMemory(int memory) => (machine) => machine.Memory[memory] = machine.Stack.Pop();
+        public static Operator PushFromMemory(int memory) => (machine) => machine.Stack.Push(machine.Memory[memory]);
 
         public static Operator FractionalPart => op((x) => x.FractionalPart);
 

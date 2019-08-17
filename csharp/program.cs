@@ -7,29 +7,29 @@ namespace StackMachine
     {
         static void Main(string[] args)
         {
-            var stack = new Stack<Number>();
+            var machine = new Machine();
 
             Console.WriteLine("Hello World!");
 
             TestList.ForEach(test =>
             {
-                RunTest(stack, test);
-                ValidateTest(stack);
+                RunTest(machine, test);
+                ValidateTest(machine);
             });
         }
 
-        static void RunTest(Stack<Number> stack, List<Operator> test)
+        static void RunTest(Machine machine, List<Operator> test)
         {
-            test.ForEach(op => op(stack));
+            test.ForEach(op => op(machine));
         }
 
-        static void ValidateTest(Stack<Number> stack)
+        static void ValidateTest(Machine machine)
         {
             bool AreEqual(Number a, Number b, Number p) => a.Minus(b).AbsoluteValue.LessThanOrEqualTo(p);
 
-            var precision = stack.Pop();
-            var expected = stack.Pop();
-            var actual = stack.Pop();
+            var precision = machine.Stack.Pop();
+            var expected = machine.Stack.Pop();
+            var actual = machine.Stack.Pop();
             var passed = AreEqual(expected, actual, precision);
 
             if (passed)
@@ -45,7 +45,8 @@ namespace StackMachine
             TestSquaresAndSquareRoot,
             TestDivide,
             TestRemainder,
-            TestFractionalPart
+            TestFractionalPart,
+            TestMachineMemory
         };
 
         static List<Operator> TestDistanceToProximaCentauri => new List<Operator>
@@ -120,6 +121,24 @@ namespace StackMachine
 
             Operators.Push(-0.1),
             Operators.Push(0.000000000001)
+        };
+
+        static List<Operator> TestMachineMemory => new List<Operator>
+        {
+            Operators.Push(3),
+            Operators.Push(5),
+            Operators.Add,
+            Operators.PopToMemory(0),
+
+            Operators.Push(7),
+            Operators.Push(11),
+            Operators.Add,
+
+            Operators.PushFromMemory(0),
+            Operators.Multiply,
+
+            Operators.Push(144),
+            Operators.Push(0)
         };
     }
 }
