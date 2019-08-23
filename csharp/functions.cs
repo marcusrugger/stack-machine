@@ -24,17 +24,17 @@ namespace StackMachine
 
         public static Number Factorial(Number x)
         {
-            if (x.FractionalPart.NotEquals(NumberInteger.Zero) ||
-                x.LessThan(NumberInteger.Zero)) throw new ArgumentException("Factorial argument must be an integer >= 0");
+            if (x.FractionalPart.NotEquals(x.AsZero()) ||
+                x.LessThan(x.AsZero())) throw new ArgumentException("Factorial argument must be an integer >= 0");
 
-            if (x.Equals(NumberInteger.Zero)) return new NumberInteger(1);
+            if (x.Equals(x.AsZero())) return x.AsOne();
 
-            return Recursion(new NumberFloatingPoint(1.0));
+            return FactorialOf(x);
 
-            Number Recursion(Number c)
+            Number FactorialOf(Number c)
             {
-                if (c.LessThan(x))
-                    return c.Times(Recursion(c.Increment));
+                if (c.GreaterThan(c.AsOne()))
+                    return c.Times(FactorialOf(c.Decrement));
                 else
                     return c;
             }
